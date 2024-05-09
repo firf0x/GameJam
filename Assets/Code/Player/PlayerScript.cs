@@ -7,48 +7,75 @@ namespace Assets.Code.Player
 {
     public class PlayerScript : MonoBehaviour, IDead {
 
+        /// <summary>
+        /// Основной класс игрока реализующий:
+        /// 1. Передвижение
+        /// 2. Вращение
+        /// </summary> 
+
+
+        //-------------------------------------------------------------------------------
+        // Конфиг игрока
         [SerializeField] private PlayerConfig _config;
-        [SerializeField] private Vector2 spawnCoords;
-        [SerializeField] private FadeScreen fade;
-        [SerializeField] private GameObject player;
-
-        private Move _move;
 
 
+        //-------------------------------------------------------------------------------
+        // Классы для доп. функций
+        private Move _moveScript;
+
+        private Rotate _rotateScript;
+
+        //-------------------------------------------------------------------------------
+        // Компоненты юнити
         private Rigidbody2D _rigidbody;
 
 
-        public void Initialize()
-        {
+
+        //-------------------------------------------------------------------------------
+        // Инициализация класса
+        public void Initialize() {
             _rigidbody = gameObject.AddComponent<Rigidbody2D>();
-            _move = new Move();
-            _move.Initialize(_config);
-            _move.eventMove += Walk;
-
             _rigidbody.gravityScale = 0;
-        }
 
+            _moveScript = new Move();
+            _moveScript.Initialize(_config);
+            _moveScript.eventMove += OnWalk;
+
+            _rotateScript = new Rotate();
+            _rotateScript.eventRotate += OnRotate;
+        }
+        
+        
+        //-------------------------------------------------------------------------------
+        // Методы MonoBehaviour
+        private void Update() {
+            // Запрос на реализацию поворота
+            _rotateScript.OnRotate(Input.mousePosition.x);
+        }
+        
         private void FixedUpdate() {
-            _move.Walk();
+            // Запрос на реализацию передвижения
+            _moveScript.OnWalk();
         }
 
-        public void Walk(Vector2 value)
-        {
+        //-------------------------------------------------------------------------------
+        // Реализация перемещения
+        public void OnWalk(Vector2 value) {
             _rigidbody.velocity = value;
         }
 
-        public void Dead()
-        {
-            gameObject.transform.position = spawnCoords;
+
+        //-------------------------------------------------------------------------------
+        // Реализация поворота
+        public void OnRotate(bool isActive) {
+            gameObject.GetComponent<SpriteRenderer>().flipX = isActive;
         }
 
-        private void OnTriggerEnter2D(Collider2D collision)
-        {
-            if (collision.gameObject.CompareTag("wolf"))
-            {
-                fade.GetComponent<FadeScreen>().StartFadeIn(); // fade screen + dead
-            }
+
+        //-------------------------------------------------------------------------------
+        // Реализация смерти
+        public void Dead() {
+            Debug.Log("Игрок умер");
         }
     }
-
 }
