@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76d10c3266a613443a417c19583c41b9, type: 3}
   m_Name: WolfConfig
   m_EditorClassIdentifier: 
-  _move: 0
-  _distance: 0
-  _acceliration: 0
+  _move: 4
+  _distance: 6
+  _acceliration: 2
