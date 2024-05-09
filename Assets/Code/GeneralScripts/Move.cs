@@ -31,9 +31,17 @@ namespace Assets.Code.GeneralScripts
 
             Vector2 vector = new Vector2(x, y).normalized;
             
-            Vector2 result = vector * _value;
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                Vector2 result = vector * _value * 2;
+                eventMove?.Invoke(result);
+            }
+            else
+            {
+                Vector2 result = vector * _value;
+                eventMove?.Invoke(result);
+            }
 
-            eventMove?.Invoke(result);
         }
 
         // Получение переменной скорости

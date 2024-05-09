@@ -12,11 +12,13 @@ namespace Assets.Code.Other
 
         // Класс игрока
         [SerializeField] private PlayerScript _player;
+        [SerializeField] private WolfScript _wolfs;
 
         // Методы юнити
         private void Awake() {
             // Инициализация игрока
             _player.Initialize();
+            _wolfs.Initialize();
         }
 
     }

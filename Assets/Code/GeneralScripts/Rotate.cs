@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Assets.Code.GeneralScripts
 {
-    public class Rotate : IRotate {
+    public class Rotation : IRotate {
 
         /// <summary>
         /// Класс для подтверждения поворота

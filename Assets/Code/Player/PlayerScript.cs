@@ -2,6 +2,7 @@ using UnityEngine;
 using Assets.Code.GeneralScripts;
 using System.Collections;
 using static UnityEditor.Experimental.GraphView.GraphView;
+using UnityEngine.UIElements;
 
 namespace Assets.Code.Player
 {
@@ -12,6 +13,7 @@ namespace Assets.Code.Player
 
         private Move _move;
 
+        private Rotation _rotateScript;
 
         private Rigidbody2D _rigidbody;
 
@@ -21,20 +23,30 @@ namespace Assets.Code.Player
             _rigidbody = gameObject.AddComponent<Rigidbody2D>();
             _move = new Move();
             _move.Initialize(_config);
-            _move.eventMove += Walk;
+            _move.eventMove += OnWalk;
+
+            _rotateScript = new Rotation();
+            _rotateScript.eventRotate += OnRotate;
 
             _rigidbody.gravityScale = 0;
         }
-
+        private void Update()
+        {
+            // Запрос на реализацию поворота
+            _rotateScript.OnRotate(Input.mousePosition.x);
+        }
         private void FixedUpdate() {
-            _move.Walk();
+            _move.OnWalk();
         }
 
-        public void Walk(Vector2 value)
+        public void OnWalk(Vector2 value)
         {
             _rigidbody.velocity = value;
         }
-
+        public void OnRotate(bool isActive)
+        {
+            gameObject.GetComponent<SpriteRenderer>().flipX = isActive;
+        }
         public void Dead()
         {
             gameObject.transform.position = _config.spawnCoords;
