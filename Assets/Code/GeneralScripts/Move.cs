@@ -2,10 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 namespace Assets.Code.GeneralScripts
 {
-    public class Move : IMovable, IGetValue
-    {
+    public class Move : IMovable, IGetValue{
+        
         /// <summary>
         /// Класс для реализации движения
         /// </summary>
@@ -16,10 +17,6 @@ namespace Assets.Code.GeneralScripts
         // Переменная скорости объекта
         private float _value;
 
-        private float x;
-        private float y;
-
-
         // Конструктор класса
         public void Initialize(PlayerConfig settings)
         {
@@ -27,10 +24,10 @@ namespace Assets.Code.GeneralScripts
         }
 
         // Функция передвижения
-        public void Walk()
+        public void OnWalk()
         {
-            x = Input.GetAxisRaw("Horizontal");
-            y = Input.GetAxisRaw("Vertical");
+            float x = Input.GetAxisRaw("Horizontal");
+            float y = Input.GetAxisRaw("Vertical");
 
             Vector2 vector = new Vector2(x, y).normalized;
             
@@ -40,9 +37,6 @@ namespace Assets.Code.GeneralScripts
         }
 
         // Получение переменной скорости
-        public void GetValue(out float outValue)
-        {
-            outValue = this._value;
-        }
+        public void GetValue(out float outValue) => outValue = this._value;
     }
 }
