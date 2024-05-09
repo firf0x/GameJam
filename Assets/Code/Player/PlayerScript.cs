@@ -8,9 +8,7 @@ namespace Assets.Code.Player
     public class PlayerScript : MonoBehaviour, IDead {
 
         [SerializeField] private PlayerConfig _config;
-        [SerializeField] private Vector2 spawnCoords;
-        [SerializeField] private FadeScreen fade;
-        [SerializeField] private GameObject player;
+        [SerializeField] public Animator anim;
 
         private Move _move;
 
@@ -39,14 +37,14 @@ namespace Assets.Code.Player
 
         public void Dead()
         {
-            gameObject.transform.position = spawnCoords;
+            gameObject.transform.position = _config.spawnCoords;
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.gameObject.CompareTag("wolf"))
             {
-                fade.GetComponent<FadeScreen>().StartFadeIn(); // fade screen + dead
+                anim.enabled = true;
             }
         }
     }

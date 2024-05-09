@@ -1,31 +1,31 @@
+using Assets.Code.GeneralScripts;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
-public class Woolf : MonoBehaviour
+public class WolfScript : MonoBehaviour
 {
-    [SerializeField] private float move;
-    [SerializeField] private float distance;
-    [SerializeField] private float acceliration;
-    [SerializeField] private GameObject player;
+    [SerializeField] private WolfConfig _config;
+    [SerializeField] private Transform player;
     private Rigidbody2D body;
 
-    void Start()
+    public void Initialize()
     {
-        body = GetComponent<Rigidbody2D>();
+        body = gameObject.AddComponent<Rigidbody2D>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (player != null)
         {
-            if ((player.transform.position.y - gameObject.transform.position.y) >= distance)
+            if ((player.transform.position.y - gameObject.transform.position.y) >= _config.Distance)
             {
-                body.velocity = Vector2.up * move * acceliration;
+                body.velocity = Vector2.up * _config.Move * _config.Acceliration;
             }
             else
             {
-                body.velocity = Vector2.up * move;
+                body.velocity = Vector2.up * _config.Move;
             }
         }
     }
