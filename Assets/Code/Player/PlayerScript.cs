@@ -1,23 +1,38 @@
 using UnityEngine;
+using Assets.Code.GeneralScripts;
 
-public class PlayerScript : MonoBehaviour, IDead {
-    
-    private Move move;
+namespace Assets.Code.Player
+{
+    public class PlayerScript : MonoBehaviour, IDead {
 
-    public void Initialize()
-    {
+        [SerializeField] private PlayerConfig _config;
+        private Move _move;
         
-        move.eventMove += Walk;
-    }
+        private Rigidbody2D _rigidbody;
 
-    public void Walk(float value)
-    {
+        public void Initialize()
+        {
+            _rigidbody = gameObject.AddComponent<Rigidbody2D>();
+            _move = new Move();
+            _move.Initialize(_config);
+            _move.eventMove += Walk;
 
-    }
+            _rigidbody.gravityScale = 0;
+        }
 
-    public void Dead()
-    {
-        Debug.Log("Игрок умер");
+        private void FixedUpdate() {
+            _move.Walk();
+        }
+
+        public void Walk(Vector2 value)
+        {
+            _rigidbody.velocity = value;
+        }
+
+        public void Dead()
+        {
+            Debug.Log("Игрок умер");
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
