@@ -17,13 +17,25 @@ public class Woolf : MonoBehaviour
 
     void Update()
     {
-        if ((player.transform.position.y - gameObject.transform.position.y) >= distance)
+        if (player != null)
         {
-            body.velocity = Vector2.up * move * acceliration;
-        }
-        else
-        {
-            body.velocity = Vector2.up * move;
+            if ((player.transform.position.y - gameObject.transform.position.y) >= distance)
+            {
+                body.velocity = Vector2.up * move * acceliration;
+            }
+            else
+            {
+                body.velocity = Vector2.up * move;
+            }
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            body.velocity = Vector2.zero;
+        }
+    }
+
 }
