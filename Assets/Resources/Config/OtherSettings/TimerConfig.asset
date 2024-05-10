@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9b126b2e32acb84e8f37e2615efbc2a, type: 3}
   m_Name: TimerConfig
   m_EditorClassIdentifier: 
-  _coolDown: 1
+  _coolDown: 0.8

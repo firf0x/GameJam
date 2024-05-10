@@ -14,6 +14,10 @@ namespace Assets.Code.Player
         [SerializeField] private TimerConfig _timerConfig;
         private Move _move;
 
+        public AK.Wwise.Event footstepEvent;
+        string SurfaceType;
+        public LayerMask lm;
+
         private Timer _timer;
 
         private Rotation _rotateScript;
@@ -53,7 +57,7 @@ namespace Assets.Code.Player
         }
 
         //------------------------------------------------------------------------
-        
+
         public void OnWalk(Vector2 value)
         {
             _rigidbody.velocity = value;
@@ -68,11 +72,21 @@ namespace Assets.Code.Player
                 anim.SetBool("isMove", true);
             }
 
-            if(value.magnitude > 0 && _timer.GetTime())
+            if (value.magnitude > 0 && _timer.GetTime())
             {
-                // делаешь вызов звука.
+                footstepEvent.Post(gameObject);
             }
+
         }
+
+        //void Walk()
+        //{
+
+           // footstepEvent.Post(gameObject);
+
+       // }
+
+
         public void OnRotate(float value)
         {
             gameObject.transform.rotation = Quaternion.Euler(0f, 0f, value - 90);
