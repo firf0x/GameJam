@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 
 namespace Assets.Code.Player
 {
-    public class PlayerScript : MonoBehaviour, IDead, IActivate {
+    public class PlayerScript : MonoBehaviour, IDead, IActivate, IPosition {
 
         [SerializeField] private PlayerConfig _plConfig;
         [SerializeField] private KeyboardConfig _keyConfig;
@@ -90,6 +90,12 @@ namespace Assets.Code.Player
         
         //------------------------------------------------------------------------
         
+        public Transform Position(){
+            return gameObject.transform;
+        }
+
+        //------------------------------------------------------------------------
+
         public void Dead()
         {
             //DisactivateObject();
@@ -101,6 +107,8 @@ namespace Assets.Code.Player
         {
             Debug.Log($"Speed {first} : Acceliration {second}");
         }
+
+        //------------------------------------------------------------------------
 
         private void OnTriggerStay2D(Collider2D collision)
         {
