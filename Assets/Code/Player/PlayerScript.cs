@@ -11,8 +11,10 @@ namespace Assets.Code.Player
 
         [SerializeField] private PlayerConfig _plConfig;
         [SerializeField] private KeyboardConfig _keyConfig;
-
+        [SerializeField] private TimerConfig _timerConfig;
         private Move _move;
+
+        private Timer _timer;
 
         private Rotation _rotateScript;
 
@@ -34,6 +36,8 @@ namespace Assets.Code.Player
             _rotateScript = new Rotation();
             _rotateScript.eventRotate += OnRotate;
 
+            _timer = new Timer(_timerConfig);
+
             _move.Info();
             _move.eventInfo -= Info;
         }
@@ -53,7 +57,8 @@ namespace Assets.Code.Player
         public void OnWalk(Vector2 value)
         {
             _rigidbody.velocity = value;
-            Debug.Log(value);
+            //Debug.Log(value);
+
             if (value == Vector2.zero)
             {
                 anim.SetBool("isMove", false);
@@ -61,6 +66,11 @@ namespace Assets.Code.Player
             else
             {
                 anim.SetBool("isMove", true);
+            }
+
+            if(value.magnitude > 0 && _timer.GetTime())
+            {
+                // делаешь вызов звука.
             }
         }
         public void OnRotate(float value)
