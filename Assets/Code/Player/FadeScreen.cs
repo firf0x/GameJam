@@ -11,11 +11,11 @@ public class FadeScreen : MonoBehaviour
     public void Dead()
     {
         player.Dead();
-        wolf.position = new Vector3(0.3844f, -5.0565f, 0);
+        wolf.position = new Vector3(-9.69f, -24.09f, 0);
     }
 
     public void Finish()
     {
-        player.anim.enabled = false;
+        player.fadeAnim.enabled = false;
     }
 }

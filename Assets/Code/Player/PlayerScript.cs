@@ -17,6 +17,7 @@ namespace Assets.Code.Player
         private Rotation _rotateScript;
 
         private Rigidbody2D _rigidbody;
+        [SerializeField] public Animator fadeAnim;
         [SerializeField] public Animator anim;
 
         //------------------------------------------------------------------------
@@ -52,6 +53,15 @@ namespace Assets.Code.Player
         public void OnWalk(Vector2 value)
         {
             _rigidbody.velocity = value;
+            Debug.Log(value);
+            if (value == Vector2.zero)
+            {
+                anim.SetBool("isMove", false);
+            }
+            else
+            {
+                anim.SetBool("isMove", true);
+            }
         }
         public void OnRotate(float value)
         {
@@ -71,11 +81,11 @@ namespace Assets.Code.Player
         }
 
         public void AnimationActivate(){
-            anim.enabled = true;
+            fadeAnim.enabled = true;
         }
 
         public void AnimationDisactivate(){
-            anim.enabled = false;
+            fadeAnim.enabled = false;
         }
         
         //------------------------------------------------------------------------
@@ -95,8 +105,8 @@ namespace Assets.Code.Player
         private void OnTriggerStay2D(Collider2D collision)
         {
             if (collision.gameObject.CompareTag("wolf"))
-            {
-                anim.enabled = true;
+            { 
+                fadeAnim.enabled = true;
             }
         }
     }
