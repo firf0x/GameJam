@@ -8,9 +8,11 @@ namespace Assets.Resources.Config
     [CreateAssetMenu(fileName = "New KeyboardConfig", menuName = "Config/Settings/KeyboardConfig")]
     public class KeyboardConfig : ScriptableObject {
         [SerializeField] private KeyCode _sprint;
+        [SerializeField] private KeyCode _slowdown;
         [SerializeField] private KeyCode _menu;
     
         public KeyCode Sprint => this._sprint;
+        public KeyCode Slowdown => this._slowdown;
         public KeyCode Menu => this._menu;
     }
 }

@@ -21,12 +21,14 @@ namespace Assets.Code.GeneralScripts
         private float _secondValue;
 
         private KeyCode _key;
+        private KeyCode _key2;
         // Конструктор класса
         public Move(PlayerConfig settings, KeyboardConfig keyConfig)
         {
             this._firstValue = settings.Speed;
             this._secondValue = settings.Acceliration;
             this._key = keyConfig.Sprint;
+            this._key2 = keyConfig.Slowdown;
         }
 
         // Функция передвижения
@@ -44,7 +46,11 @@ namespace Assets.Code.GeneralScripts
                 result *= _secondValue;
                 eventMove?.Invoke(result);
             }
-
+            else if (Input.GetKey(this._key2))
+            {
+                result /= _secondValue;
+                eventMove?.Invoke(result);
+            }
             else
             {
                 eventMove?.Invoke(result);

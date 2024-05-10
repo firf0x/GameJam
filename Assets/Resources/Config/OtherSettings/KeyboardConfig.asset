@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: KeyboardConfig
   m_EditorClassIdentifier: 
   _sprint: 304
+  _slowdown: 306
   _menu: 27
