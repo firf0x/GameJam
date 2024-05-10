@@ -2,6 +2,7 @@ using Assets.Code.Player;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Assets.Resources.Config;
 
 public class FadeScreen : MonoBehaviour
 {

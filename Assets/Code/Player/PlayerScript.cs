@@ -1,58 +1,95 @@
 using UnityEngine;
 using Assets.Code.GeneralScripts;
 using System.Collections;
+using Assets.Resources.Config;
 using static UnityEditor.Experimental.GraphView.GraphView;
 using UnityEngine.UIElements;
 
 namespace Assets.Code.Player
 {
-    public class PlayerScript : MonoBehaviour, IDead {
+    public class PlayerScript : MonoBehaviour, IDead, IActivate {
 
-        [SerializeField] private PlayerConfig _config;
-        [SerializeField] public Animator anim;
+        [SerializeField] private PlayerConfig _plConfig;
+        [SerializeField] private KeyboardConfig _keyConfig;
 
         private Move _move;
 
         private Rotation _rotateScript;
 
         private Rigidbody2D _rigidbody;
+        [SerializeField] public Animator anim;
 
+        //------------------------------------------------------------------------
 
         public void Initialize()
         {
             _rigidbody = gameObject.AddComponent<Rigidbody2D>();
-            _move = new Move();
-            _move.Initialize(_config);
+            _rigidbody.gravityScale = 0;
+
+            _move = new Move(_plConfig, _keyConfig);
             _move.eventMove += OnWalk;
+            _move.eventInfo += Info;
 
             _rotateScript = new Rotation();
             _rotateScript.eventRotate += OnRotate;
 
-            _rigidbody.gravityScale = 0;
+            _move.Info();
+            _move.eventInfo -= Info;
         }
+        
+        //------------------------------------------------------------------------
+
         private void Update()
         {
-            // Запрос на реализацию поворота
-            //_rotateScript.OnRotate(Input.mousePosition.x);
-            Vector3 diference = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
-            float rotateZ = Mathf.Atan2(diference.y, diference.x) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.Euler(0f, 0f, rotateZ - 90);
+            _rotateScript.OnRotate(gameObject.transform);
         }
         private void FixedUpdate() {
             _move.OnWalk();
         }
 
+        //------------------------------------------------------------------------
+        
         public void OnWalk(Vector2 value)
         {
             _rigidbody.velocity = value;
         }
-        public void OnRotate(bool isActive)
+        public void OnRotate(float value)
         {
-            gameObject.GetComponent<SpriteRenderer>().flipX = isActive;
+            gameObject.transform.rotation = Quaternion.Euler(0f, 0f, value - 90);
         }
+        
+        //------------------------------------------------------------------------
+        
+        public void ActivateObject(){
+            _move.eventMove += OnWalk;
+            _rotateScript.eventRotate += OnRotate;
+        }
+
+        public void DisactivateObject(){
+            _move.eventMove -= OnWalk;
+            _rotateScript.eventRotate -= OnRotate;
+        }
+
+        public void AnimationActivate(){
+            anim.enabled = true;
+        }
+
+        public void AnimationDisactivate(){
+            anim.enabled = false;
+        }
+        
+        //------------------------------------------------------------------------
+        
         public void Dead()
         {
-            gameObject.transform.position = _config.spawnCoords;
+            //DisactivateObject();
+            gameObject.transform.position = _plConfig.spawnCoords;
+        }
+
+
+        private void Info(float first, float second)
+        {
+            Debug.Log($"Speed {first} : Acceliration {second}");
         }
 
         private void OnTriggerEnter2D(Collider2D collision)

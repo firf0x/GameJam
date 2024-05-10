@@ -1,3 +1,5 @@
+using System;
+using UnityEngine;
 public interface IRotate {
-    void OnRotate(float cursorPointX);
+    void OnRotate(Transform player);
 }

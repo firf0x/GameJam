@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
-
+using Assets.Resources.Config;
 public class WolfScript : MonoBehaviour
 {
     [SerializeField] private WolfConfig _config;
