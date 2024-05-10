@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: PlayerConfig
   m_EditorClassIdentifier: 
   _speed: 5
-  _acceliration: 1.2
-  _spawnCoords: {x: 0, y: 0}
+  _acceliration: 1.7
+  _spawnCoords: {x: -0.19, y: -17.69}

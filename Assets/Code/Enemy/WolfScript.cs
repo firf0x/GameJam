@@ -19,7 +19,7 @@ public class WolfScript : MonoBehaviour
     {
         if (player != null)
         {
-            if ((player.transform.position.y - gameObject.transform.position.y) >= _config.Distance)
+            if ((player.position.y - gameObject.transform.position.y) >= _config.Distance)
             {
                 body.velocity = Vector2.up * _config.Move * _config.Acceliration;
             }
