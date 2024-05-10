@@ -14,10 +14,14 @@ namespace Assets.Code.GeneralScripts
         
         // Функция реализующая просцёт поворота
         public void OnRotate(Transform _object) {
-            Vector3 diference = Camera.main.ScreenToWorldPoint(Input.mousePosition) - _object.position;
-            float rotateZ = Mathf.Atan2(diference.y, diference.x) * Mathf.Rad2Deg;
+            if (Time.timeScale != 0) 
+            {
+                Vector3 diference = Camera.main.ScreenToWorldPoint(Input.mousePosition) - _object.position;
+                float rotateZ = Mathf.Atan2(diference.y, diference.x) * Mathf.Rad2Deg;
             
-            eventRotate?.Invoke(rotateZ);
+                eventRotate?.Invoke(rotateZ);
+            }
+            
         }
     }
 }
