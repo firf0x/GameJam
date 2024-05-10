@@ -4,6 +4,7 @@ using System.Collections;
 using Assets.Resources.Config;
 using static UnityEditor.Experimental.GraphView.GraphView;
 using UnityEngine.UIElements;
+using AK.Wwise;
 
 namespace Assets.Code.Player
 {
@@ -13,6 +14,9 @@ namespace Assets.Code.Player
         [SerializeField] private KeyboardConfig _keyConfig;
 
         private Move _move;
+
+        public AK.Wwise.Event footstepEvent;
+      
 
         private Rotation _rotateScript;
 
@@ -52,6 +56,12 @@ namespace Assets.Code.Player
         public void OnWalk(Vector2 value)
         {
             _rigidbody.velocity = value;
+            
+            if (value.magnitude > 0)
+            {
+                footstepEvent.Post(gameObject);
+            }
+            Debug.Log(footstepEvent);
         }
         public void OnRotate(float value)
         {
