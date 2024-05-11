@@ -20,15 +20,17 @@ namespace Assets.Code.GeneralScripts
         private float _firstValue;
         private float _secondValue;
 
+        private Timer _timer;
         private KeyCode _key;
         private KeyCode _key2;
         // Конструктор класса
-        public Move(PlayerConfig settings, KeyboardConfig keyConfig)
+        public Move(PlayerConfig settings, KeyboardConfig keyConfig, TimerConfig timerConfig)
         {
             this._firstValue = settings.Speed;
             this._secondValue = settings.Acceliration;
             this._key = keyConfig.Sprint;
             this._key2 = keyConfig.Slowdown;
+            _timer = new Timer(timerConfig);
         }
 
         // Функция передвижения
@@ -41,8 +43,16 @@ namespace Assets.Code.GeneralScripts
             
             Vector2 result = vector * _firstValue;
 
-            if (Input.GetKey(this._key))
+            if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.D))
             {
+                Debug.Log("Произвести один раз");
+            }
+            else if (Input.GetKey(_key))
+            {
+                if (_timer.GetTime())
+                {
+                    Debug.Log("Производится звук при беге");
+                }
                 result *= _secondValue;
                 eventMove?.Invoke(result);
             }
@@ -51,11 +61,18 @@ namespace Assets.Code.GeneralScripts
                 result /= _secondValue;
                 eventMove?.Invoke(result);
             }
+            else if(vector.magnitude > 0)
+            {
+                if (_timer.GetTime())
+                {
+                    Debug.Log("Производится звук при ходьбе");
+                }
+                eventMove?.Invoke(result);
+            }
             else
             {
                 eventMove?.Invoke(result);
             }
-
         }
 
         // Функция передачи информации

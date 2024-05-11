@@ -5,6 +5,8 @@ public class Timer : ITime {
     
     private float timeAccumulator;
     public float _value;
+    
+    private float result;
 
     public Timer(TimerConfig config)
     {
@@ -13,12 +15,14 @@ public class Timer : ITime {
 
     public bool GetTime()
     {
-        float result = timeAccumulator + Time.fixedDeltaTime;
-        timeAccumulator = result - Mathf.Floor(result);
+        result += timeAccumulator + Time.fixedDeltaTime;
+        timeAccumulator = Mathf.Floor(result);
+        Debug.Log(timeAccumulator + " : " + result);
         if (result >= _value)
         {
-            //Debug.Log(result);
+            //Debug.Log("Вывод");
             result = 0f;
+            timeAccumulator = 0f;
             return true;
         }
         else
