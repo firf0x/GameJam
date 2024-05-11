@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Assets.Resources.Config;
-
+using UnityEngine.SceneManagement;
 public class FadeScreen : MonoBehaviour
 {
     [SerializeField] private Transform wolf;
@@ -11,7 +11,13 @@ public class FadeScreen : MonoBehaviour
     public void Dead()
     {
         player.Dead();
-        wolf.position = new Vector3(-9.69f, -24.09f, 0);
+        if (player.firstLevel)
+            wolf.position = new Vector3(-9.69f, -24.09f, 0);
+        else
+        {
+            SceneManager.LoadScene("SecondLevel");
+        }
+
     }
 
     public void Finish()

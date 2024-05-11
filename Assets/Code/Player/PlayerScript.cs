@@ -13,6 +13,7 @@ namespace Assets.Code.Player
         [SerializeField] private PlayerConfig _plConfig;
         [SerializeField] private KeyboardConfig _keyConfig;
         [SerializeField] private TimerConfig _timerConfig;
+        [SerializeField] public RadarScript _radar;
         private Move _move;
 
         public AK.Wwise.Event footstepEvent;
@@ -27,6 +28,7 @@ namespace Assets.Code.Player
         [SerializeField] public Animator fadeAnim;
         [SerializeField] public Animator anim;
         [SerializeField] public bool firstLevel;
+        public bool invize;
 
         //------------------------------------------------------------------------
 
@@ -53,6 +55,14 @@ namespace Assets.Code.Player
         private void Update()
         {
             _rotateScript.OnRotate(gameObject.transform);
+            if (Input.GetKeyDown(KeyCode.LeftControl) && !invize)
+            {
+                _radar.CahgeRadius("sitting");
+            }
+            if (Input.GetKeyUp(KeyCode.LeftControl) && !invize)
+            {
+                _radar.CahgeRadius("run");
+            }
         }
         private void FixedUpdate() {
             _move.OnWalk(firstLevel);
@@ -64,7 +74,6 @@ namespace Assets.Code.Player
         {
             _rigidbody.velocity = value;
             //Debug.Log(value);
-
             if (value == Vector2.zero)
             {
                 anim.SetBool("isMove", false);
@@ -141,22 +150,6 @@ namespace Assets.Code.Player
             if (collision.gameObject.CompareTag("wolf"))
             {
                 AnimationActivate();
-            }
-        }
-        private void OnTriggerEnter2D(Collider2D collision)
-        {
-            if (collision.gameObject.CompareTag("bush"))
-            {
-                //При вхождение в кусты, кусты становятся полупрозрачными
-                collision.gameObject.GetComponent<SpriteRenderer>().color = new Vector4(collision.gameObject.GetComponent<SpriteRenderer>().color.a, collision.gameObject.GetComponent<SpriteRenderer>().color.g, collision.gameObject.GetComponent<SpriteRenderer>().color.b, 0.5f);
-            }
-        }
-        private void OnTriggerExit2D(Collider2D collision)
-        {
-            if (collision.gameObject.CompareTag("bush"))
-            {
-                //При выхождение из кустов, кусты становятся полностью видимыми
-                collision.gameObject.GetComponent<SpriteRenderer>().color = new Vector4(collision.gameObject.GetComponent<SpriteRenderer>().color.a, collision.gameObject.GetComponent<SpriteRenderer>().color.g, collision.gameObject.GetComponent<SpriteRenderer>().color.b, 1f);
             }
         }
     }
