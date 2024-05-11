@@ -4,6 +4,7 @@ using System.Collections;
 using Assets.Resources.Config;
 using static UnityEditor.Experimental.GraphView.GraphView;
 using UnityEngine.UIElements;
+using UnityEngine.Tilemaps;
 
 namespace Assets.Code.Player
 {
@@ -137,8 +138,24 @@ namespace Assets.Code.Player
         private void OnTriggerStay2D(Collider2D collision)
         {
             if (collision.gameObject.CompareTag("wolf"))
-            { 
-                fadeAnim.enabled = true;
+            {
+                AnimationActivate();
+            }
+        }
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.gameObject.CompareTag("bush"))
+            {
+                //При вхождение в кусты, кусты становятся полупрозрачными
+                collision.gameObject.GetComponent<Tilemap>().color = new Vector4(collision.gameObject.GetComponent<Tilemap>().color.a, collision.gameObject.GetComponent<Tilemap>().color.g, collision.gameObject.GetComponent<Tilemap>().color.b, 0.5f);
+            }
+        }
+        private void OnTriggerExit2D(Collider2D collision)
+        {
+            if (collision.gameObject.CompareTag("bush"))
+            {
+                //При выхождение из кустов, кусты становятся полностью видимыми
+                collision.gameObject.GetComponent<Tilemap>().color = new Vector4(collision.gameObject.GetComponent<Tilemap>().color.a, collision.gameObject.GetComponent<Tilemap>().color.g, collision.gameObject.GetComponent<Tilemap>().color.b, 1f);
             }
         }
     }

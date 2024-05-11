@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - wolf
+  - bush
+  - jellyfish
+  - radar
   layers:
   - Default
   - TransparentFX
