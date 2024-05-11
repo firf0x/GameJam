@@ -1,4 +1,4 @@
 using System;
 public interface IMovable {
-    void OnWalk();
+    void OnWalk(bool IsFirstLevel);
 }

@@ -34,7 +34,7 @@ namespace Assets.Code.GeneralScripts
         }
 
         // Функция передвижения
-        public void OnWalk()
+        public void OnWalk(bool isFirstLevel)
         {
             float x = Input.GetAxisRaw("Horizontal");
             float y = Input.GetAxisRaw("Vertical");
@@ -47,7 +47,7 @@ namespace Assets.Code.GeneralScripts
             {
                 Debug.Log("Произвести один раз");
             }
-            else if (Input.GetKey(_key))
+            else if (Input.GetKey(_key) && isFirstLevel)
             {
                 if (_timer.GetTime())
                 {
@@ -56,7 +56,7 @@ namespace Assets.Code.GeneralScripts
                 result *= _secondValue;
                 eventMove?.Invoke(result);
             }
-            else if (Input.GetKey(this._key2))
+            else if (Input.GetKey(this._key2) && !isFirstLevel)
             {
                 result /= _secondValue;
                 eventMove?.Invoke(result);

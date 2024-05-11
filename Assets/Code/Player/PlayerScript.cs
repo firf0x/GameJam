@@ -26,6 +26,7 @@ namespace Assets.Code.Player
         private Rigidbody2D _rigidbody;
         [SerializeField] public Animator fadeAnim;
         [SerializeField] public Animator anim;
+        [SerializeField] public bool firstLevel;
 
         //------------------------------------------------------------------------
 
@@ -34,7 +35,7 @@ namespace Assets.Code.Player
             _rigidbody = gameObject.AddComponent<Rigidbody2D>();
             _rigidbody.gravityScale = 0;
 
-            _move = new Move(_plConfig, _keyConfig);
+            _move = new Move(_plConfig, _keyConfig, _timerConfig);
             _move.eventMove += OnWalk;
             _move.eventInfo += Info;
 
@@ -54,7 +55,7 @@ namespace Assets.Code.Player
             _rotateScript.OnRotate(gameObject.transform);
         }
         private void FixedUpdate() {
-            _move.OnWalk();
+            _move.OnWalk(firstLevel);
         }
 
         //------------------------------------------------------------------------
@@ -147,7 +148,7 @@ namespace Assets.Code.Player
             if (collision.gameObject.CompareTag("bush"))
             {
                 //При вхождение в кусты, кусты становятся полупрозрачными
-                collision.gameObject.GetComponent<Tilemap>().color = new Vector4(collision.gameObject.GetComponent<Tilemap>().color.a, collision.gameObject.GetComponent<Tilemap>().color.g, collision.gameObject.GetComponent<Tilemap>().color.b, 0.5f);
+                collision.gameObject.GetComponent<SpriteRenderer>().color = new Vector4(collision.gameObject.GetComponent<SpriteRenderer>().color.a, collision.gameObject.GetComponent<SpriteRenderer>().color.g, collision.gameObject.GetComponent<SpriteRenderer>().color.b, 0.5f);
             }
         }
         private void OnTriggerExit2D(Collider2D collision)
@@ -155,7 +156,7 @@ namespace Assets.Code.Player
             if (collision.gameObject.CompareTag("bush"))
             {
                 //При выхождение из кустов, кусты становятся полностью видимыми
-                collision.gameObject.GetComponent<Tilemap>().color = new Vector4(collision.gameObject.GetComponent<Tilemap>().color.a, collision.gameObject.GetComponent<Tilemap>().color.g, collision.gameObject.GetComponent<Tilemap>().color.b, 1f);
+                collision.gameObject.GetComponent<SpriteRenderer>().color = new Vector4(collision.gameObject.GetComponent<SpriteRenderer>().color.a, collision.gameObject.GetComponent<SpriteRenderer>().color.g, collision.gameObject.GetComponent<SpriteRenderer>().color.b, 1f);
             }
         }
     }

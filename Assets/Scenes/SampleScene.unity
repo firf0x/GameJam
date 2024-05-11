@@ -8847,6 +8847,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followTransform: {fileID: 1703412778}
+  pl: {fileID: 1703412776}
   mapBounds: {fileID: 1078671323}
 --- !u!114 &519420034
 MonoBehaviour:
@@ -24514,6 +24515,10 @@ PrefabInstance:
       propertyPath: _keyConfig
       value: 
       objectReference: {fileID: 11400000, guid: af7d10b0fccb94e46b073c963905cff2, type: 2}
+    - target: {fileID: 8284278092376004804, guid: a471e4e7ec38c0c42b93b956745bbf7f, type: 3}
+      propertyPath: firstLevel
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8284278092376004804, guid: a471e4e7ec38c0c42b93b956745bbf7f, type: 3}
       propertyPath: _timerConfig
       value: 

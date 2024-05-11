@@ -83,5 +83,6 @@ public class CatJellyfish : MonoBehaviour
             isMove = true;
         }
     }
+
 }
 
