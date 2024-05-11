@@ -58,7 +58,7 @@ namespace Assets.Code.GeneralScripts
             }
             else if (Input.GetKey(this._key2) && !isFirstLevel)
             {
-                result /= _secondValue;
+                result /= 1.7f;
                 eventMove?.Invoke(result);
             }
             else if(vector.magnitude > 0)

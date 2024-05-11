@@ -23,8 +23,7 @@ public class BushScript : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             pl.invize = false;
-            pl._radar.CahgeRadius("run");
-            //При выхождение из кустов, кусты становятся полностью видимыми
+            pl._radar.gameObject.SetActive(true);
             gameObject.GetComponent<Tilemap>().color = new Vector4(gameObject.GetComponent<Tilemap>().color.a, gameObject.GetComponent<Tilemap>().color.g, gameObject.GetComponent<Tilemap>().color.b, 1f);
         }
     }

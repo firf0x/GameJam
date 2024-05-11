@@ -12,6 +12,6 @@ public class AudioController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        musicController.PlayOneShot(music);
+        musicController.Play();
     }
 }

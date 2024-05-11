@@ -16,9 +16,9 @@ namespace Assets.Code.Player
         [SerializeField] public RadarScript _radar;
         private Move _move;
 
-        public AK.Wwise.Event footstepEvent;
-        string SurfaceType;
-        public LayerMask lm;
+        //public AK.Wwise.Event footstepEvent;
+        //string SurfaceType;
+        //public LayerMask lm;
 
         private Timer _timer;
 
@@ -44,7 +44,7 @@ namespace Assets.Code.Player
             _rotateScript = new Rotation();
             _rotateScript.eventRotate += OnRotate;
 
-            _timer = new Timer(_timerConfig);
+            //_timer = new Timer(_timerConfig);
 
             _move.Info();
             _move.eventInfo -= Info;
@@ -55,11 +55,11 @@ namespace Assets.Code.Player
         private void Update()
         {
             _rotateScript.OnRotate(gameObject.transform);
-            if (Input.GetKeyDown(KeyCode.LeftControl) && !invize)
+            if (Input.GetKey(KeyCode.LeftControl) && !invize)
             {
                 _radar.CahgeRadius("sitting");
             }
-            if (Input.GetKeyUp(KeyCode.LeftControl) && !invize)
+            else if (Input.GetKeyUp(KeyCode.LeftControl))
             {
                 _radar.CahgeRadius("run");
             }
@@ -67,6 +67,7 @@ namespace Assets.Code.Player
         private void FixedUpdate() {
             _move.OnWalk(firstLevel);
         }
+       
 
         //------------------------------------------------------------------------
 
@@ -85,7 +86,7 @@ namespace Assets.Code.Player
 
             if (value.magnitude > 0 && _timer.GetTime())
             {
-                footstepEvent.Post(gameObject);
+                //footstepEvent.Post(gameObject);
             }
 
         }
@@ -138,9 +139,13 @@ namespace Assets.Code.Player
         }
 
 
-        private void Info(float first, float second)
+        public void Info(float first, float second)
         {
             Debug.Log($"Speed {first} : Acceliration {second}");
+        }
+        public void Info2()
+        {
+            
         }
 
         //------------------------------------------------------------------------

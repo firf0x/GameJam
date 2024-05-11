@@ -25,12 +25,12 @@ public class RadarScript : MonoBehaviour
         }
         else if (state == "sitting")
         {
-            transform.localScale /= 2;
+            transform.localScale = new Vector3(2.35f, 2.35f, 0);
+            gameObject.SetActive(true);
         }
         else if(state == "invisible")
         {
-            transform.localScale = Vector3.zero;
-            Debug.Log("success");
+            gameObject.SetActive(false);
         }
     }
 }
